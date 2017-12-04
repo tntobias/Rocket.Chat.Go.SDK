@@ -1,27 +1,33 @@
 package rest
 
 import (
+	"fmt"
 	"bytes"
 	"errors"
 	"net/http"
 	"net/url"
 
-	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
+	"github.com/tntobias/Rocket.Chat.Go.SDK/models"
 )
 
 type logoutResponse struct {
-	statusResponse
-	data struct {
-		message string `json:"message"`
+	StatusResponse
+	Data struct {
+		Message string `json:"message"`
 	} `json:"data"`
 }
 
 type logonResponse struct {
-	statusResponse
+	StatusResponse
 	Data struct {
 		Token  string `json:"authToken"`
-		UserId string `json:"userId"`
+		UserID string `json:"userId"`
 	} `json:"data"`
+}
+
+type userInfoResponse struct {
+	Success bool `json:"success"`
+	UserInfo models.UserInfo `json:"user"`
 }
 
 // Login a user. The Email and the Password are mandatory. The auth token of the user is stored in the Client instance.
@@ -39,11 +45,11 @@ func (c *Client) Login(credentials models.UserCredentials) error {
 	}
 
 	if response.Status == "success" {
-		c.auth = &authInfo{id: response.Data.UserId, token: response.Data.Token}
+		c.auth = &authInfo{id: response.Data.UserID, token: response.Data.Token}
 		return nil
-	} else {
-		return errors.New("Response status: " + response.Status)
-	}
+	} 
+	return errors.New("Response status: " + response.Status)
+
 }
 
 // Logout a user. The function returns the response message of the server.
@@ -64,8 +70,20 @@ func (c *Client) Logout() (string, error) {
 	}
 
 	if response.Status == "success" {
-		return response.data.message, nil
-	} else {
-		return "", errors.New("Response status: " + response.Status)
+		return response.Data.Message, nil
+	} 
+	return "", errors.New("Response status: " + response.Status)
+
+}
+
+func (c *Client) UserInfoByName(username string) (*models.UserInfo, error) {
+	url := fmt.Sprintf("%s/api/v1/users.info?username=%s", c.getUrl(), username)
+	request, _ := http.NewRequest("GET", url, nil)
+	response := new(userInfoResponse)
+
+	if err := c.doRequest(request, response); err != nil {
+		return nil, err
 	}
+
+	return &response.UserInfo, nil
 }

@@ -3,7 +3,7 @@ package rest
 import (
 	"net/http"
 
-	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
+	"github.com/tntobias/Rocket.Chat.Go.SDK/models"
 )
 
 type infoResponse struct {

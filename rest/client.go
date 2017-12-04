@@ -1,4 +1,4 @@
-// This package provides a RocketChat rest client.
+//Package rest provides a RocketChat rest client.
 package rest
 
 import (
@@ -27,7 +27,7 @@ type authInfo struct {
 }
 
 // The base for the most of the json responses
-type statusResponse struct {
+type StatusResponse struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
 }

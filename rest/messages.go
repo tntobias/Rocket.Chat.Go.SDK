@@ -6,17 +6,17 @@ import (
 	"html"
 	"net/http"
 
-	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
+	"github.com/tntobias/Rocket.Chat.Go.SDK/models"
 )
 
 type messagesResponse struct {
-	statusResponse
+	StatusResponse
 	ChannelName string           `json:"channel"`
 	Messages    []models.Message `json:"messages"`
 }
 
 type messageResponse struct {
-	statusResponse
+	StatusResponse
 	ChannelName string         `json:"channel"`
 	Message     models.Message `json:"message"`
 }
@@ -43,7 +43,7 @@ func (c *Client) Send(channel *models.Channel, msg string) error {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/history
 func (c *Client) GetMessages(channel *models.Channel, page *Page) ([]models.Message, error) {
-	u := fmt.Sprintf("%s/api/v1/channels.history?roomId=%s", c.getUrl(), channel.Id)
+	u := fmt.Sprintf("%s/api/v1/channels.history?roomId=%s", c.getUrl(), channel.ID)
 
 	if page != nil {
 		u = fmt.Sprintf("%s&count=%d", u, page.Count)

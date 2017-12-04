@@ -1,7 +1,7 @@
 package models
 
 type Channel struct {
-	Id           string   `json:"_id"`
+	ID           string   `json:"_id"`
 	Name         string   `json:"name"`
 	MessageCount int      `json:"msgs"`
 	UserNames    []string `json:"usernames"`
@@ -17,14 +17,26 @@ type Channel struct {
 }
 
 type ChannelSubscription struct {
-	Id          string   `json:"_id"`
+	ID          string   `json:"_id"`
 	Alert       bool     `json:"alert"`
 	Name        string   `json:"name"`
 	DisplayName string   `json:"fname"`
 	Open        bool     `json:"open"`
-	RoomId      string   `json:"rid"`
+	RoomID      string   `json:"rid"`
 	Type        string   `json:"c"`
 	User        User     `json:"u"`
 	Roles       []string `json:"roles"`
 	Unread      float64      `json:"unread"`
+}
+
+
+type ChannelUserInfo struct {
+	Avatar string `json:"avatar"`
+	Extra map[string]interface{} `json:"extra"`
+	Name string `json:"name"`
+	Status string `json:"status"`
+	TZ int32 `json:"tz"`
+	Roles []string `json:"roles"`
+	Phone []UserPhone `json:"phone"`
+	Email string `json:"email"`
 }

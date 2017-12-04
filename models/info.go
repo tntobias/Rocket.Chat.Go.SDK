@@ -11,7 +11,7 @@ type Info struct {
 		OsRelease   string `json:"osRelease"`
 		TotalMemory int64  `json:"totalMemory"`
 		FreeMemory  int64  `json:"freeMemory"`
-		CpuCount    int    `json:"cpus"`
+		CPUCount    int    `json:"cpus"`
 	} `json:"build"`
 
 	Travis struct {
